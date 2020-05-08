@@ -42,7 +42,7 @@ var comp2 = {
     }
   },
   
-  template: '<div><ul class="nav flex-column"><li class="nav-item" v-for="task in tasks" > <input type="checkbox" v-model="task.checked">{{ task.value }}<button  class="btn btn-primary float-right"  > &times;</button></li></ul> </div>'
+  template: '<div><li class="nav-item" v-for="task in tasks" > <input type="checkbox" v-model="task.checked">{{ task.value }}<button  class="btn btn-primary btn-sm float-right"  > &times;</button></li></div>'
 
   }
 var comp1= {
@@ -51,7 +51,7 @@ var comp1= {
     }
   },
   components:{ list:comp2},
-  template: '<div id="main"><list></list><input type="text">   <button class="btn btn-primary" >Add</button></div>  '
+  template: '<div id="main"><ul class="nav flex-column"><list></list></ul><input type="text">   <button class="btn btn-primary" >Add</button></div>  '
   }
 
 new Vue({ 
