@@ -1,0 +1,19 @@
+{
+   
+    "tasks":
+  [      {
+      "value":"code",
+      "checked":false
+    },
+    {
+      "value":"play",
+      "checked":true
+    },
+    {
+      "value":"study",
+      "checked":false
+    }
+
+  ]     
+  
+}
