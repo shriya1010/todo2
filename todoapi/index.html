@@ -17,11 +17,15 @@
 </script>
  </head>
 <body>
- <div id="maincomponent">
+ <div id="maincomponent"> 
   
-<app v-bind:tasks="info.data"></app>
+    <p v-for="data in info.data" >{{data.title}} <button  class="btn btn-primary btn-sm float-right" v-on:click="data.show=!data.show" >View</button>
+      <app v-show="data.show" v-bind:tasks="data.work"></app> </p>  
+ 
+      
 </div>
   
+
 
 </body>
 </html>

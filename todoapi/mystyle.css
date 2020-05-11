@@ -2,8 +2,19 @@
     
         #main
         { background-color: yellow;
-            border: 5px solid green;
+            border: 1px solid pink;
             padding: 10px;
             margin: 20px;
   
         }
+
+        
+    
+        p
+        { background-color: pink;
+            border: 1px solid blue;
+            padding: 5px;
+            margin: 5px;
+  
+        }
+
