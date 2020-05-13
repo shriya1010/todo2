@@ -26,10 +26,12 @@ var comp1= {
   components:{ app:comp2},
   props:['info'],
   //template: '<div>  <p v-for="data in info"><router-link to="/next">{{data.title}}</router-link><app v-bind:tasks="data.work"></app> </p> </div>'
-  template: '<div>  <p v-for="data in info"><router-link to="/next">{{data.title}}</router-link></p>  </div>'
+  template: '<div> <p v-for="data in info"><router-link to="/next">{{data.title}}</router-link></p>  </div>'
 
 }
 const routes = [
+  
+  { path: '/', component: comp1 },
   { path: '/next', component: comp2 },
   
 ]
