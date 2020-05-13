@@ -1,0 +1,39 @@
+{
+  
+  "tasks":
+[ { "title":"work",
+  "work" :     
+  [{
+    "value":"code",
+    "checked":false
+  },
+  {
+    "value":"play",
+    "checked":true
+  },
+  {
+    "value":"study",
+    "checked":false
+  }]
+},
+
+{ "title":"shopping",
+  "work" :     
+  [{
+    "value":"milk",
+    "checked":false
+  },
+  {
+    "value":"eggs",
+    "checked":true
+  },
+  {
+    "value":"bread",
+    "checked":false
+  }]
+}
+
+] 
+
+        
+}
