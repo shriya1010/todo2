@@ -16,7 +16,7 @@ var comp2= {
   components:{ list:comp3},
   mounted () {
     axios({ method: "GET", "url": "http://localhost:3000/tasks" }).then(response => (this.info = response.data))},
-  template: '<div><ul class="nav flex-column" v-for="tasks in info" v-if="tasks.title === id"><p>{{id}}<list v-for="task in tasks.work" v-bind:name="task" ></list></ul><input type="text"> <button class="btn btn-primary" >Add</button></p></div>  '
+  template: '<div><p><ul class="nav flex-column" v-for="tasks in info" v-if="tasks.title === id">{{id}}<list v-for="task in tasks.work" v-bind:name="task" ></list></ul><input type="text"> <button class="btn btn-primary" >Add</button></p></div>  '
   
   //http://localhost:3000/tasks?title=$route.params.id
 
