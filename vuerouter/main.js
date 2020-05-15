@@ -10,21 +10,52 @@ var comp2= {
   data: function () {
     return {
     info:"",
-    name:""
+    name:"",
      }
   },
   props:['id'],
   components:{ list:comp3},
   methods:{
-    add:function(value){
-      //alert(value)
+     async add(value,title){
+            await axios.get('http://localhost:3000/tasks?title=work',
+      ["work",{
+         "value":"movies",
+         "checked":false
+       }])
+      .then(response => console.log(response.data))
+      .catch(function (error){
+        console.log(error);
+      }
+      );
+      
+ 
+
+
     }
   },
   mounted () {
     axios({ method: "GET", "url": "http://localhost:3000/tasks?title="+ this.$route.params.id }).then(response => (this.info = response.data))},
-  template: '<div><p><ul class="nav flex-column" v-for="tasks in info">{{id}}<list v-for="task in tasks.work" v-bind:name="task" ></list></ul><input type="text" v-model="name"><button class="btn btn-primary" v-on:click="add(name)">Add</button></p></div>  '
+  template: '<div><p><ul class="nav flex-column" v-for="tasks in info">{{id}}<list v-for="task in tasks.work" v-bind:name="task" ></list></ul><input type="text" v-model="name"><button class="btn btn-primary" v-on:click="add(name,id)">Add</button></p></div>  '
    
-}
+}//npx json-server --watch db.json
+/*,
+     {
+      "title": "shopping",
+      "work": [
+        {
+          "value": "milk",
+          "checked": false
+        },
+        {
+          "value": "eggs",
+          "checked": true
+        },
+        {
+          "value": "bread",
+          "checked": false
+        }
+      ]
+    } */
 var comp1= {  
   data: function () {
     return { 
