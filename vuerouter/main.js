@@ -10,14 +10,20 @@ var comp2= {
   data: function () {
     return {
     info:"",
+    name:""
      }
   },
   props:['id'],
   components:{ list:comp3},
+  methods:{
+    add:function(value){
+      //alert(value)
+    }
+  },
   mounted () {
-    axios({ method: "GET", "url": "http://localhost:3000/tasks" }).then(response => (this.info = response.data))},
-  template: '<div><p><ul class="nav flex-column" v-for="tasks in info" v-if="tasks.title === id">{{id}}<list v-for="task in tasks.work" v-bind:name="task" ></list></ul><input type="text"> <button class="btn btn-primary" >Add</button></p></div>  '
-   //http://localhost:3000/tasks?title=$route.params.id
+    axios({ method: "GET", "url": "http://localhost:3000/tasks?title="+ this.$route.params.id }).then(response => (this.info = response.data))},
+  template: '<div><p><ul class="nav flex-column" v-for="tasks in info">{{id}}<list v-for="task in tasks.work" v-bind:name="task" ></list></ul><input type="text" v-model="name"><button class="btn btn-primary" v-on:click="add(name)">Add</button></p></div>  '
+   
 }
 var comp1= {  
   data: function () {
@@ -48,6 +54,5 @@ new Vue({
   components:{
     titlelist:comp1
   },
-  
   router
 })
