@@ -17,15 +17,13 @@ var comp2= {
   mounted () {
     axios({ method: "GET", "url": "http://localhost:3000/tasks" }).then(response => (this.info = response.data))},
   template: '<div><p><ul class="nav flex-column" v-for="tasks in info" v-if="tasks.title === id">{{id}}<list v-for="task in tasks.work" v-bind:name="task" ></list></ul><input type="text"> <button class="btn btn-primary" >Add</button></p></div>  '
-  
-  //http://localhost:3000/tasks?title=$route.params.id
-
+   //http://localhost:3000/tasks?title=$route.params.id
 }
 var comp1= {  
   data: function () {
     return { 
        info:"",
-       
+     
     }
   },
   components:{ app:comp2},
@@ -34,7 +32,7 @@ var comp1= {
       .get(' http://localhost:3000/tasks')
       .then(response => (this.info = response))
   },
-  template: '#comp1template',
+  template: '<div><p v-for="list in info.data"><router-link :to="{ name: &quot;user&quot;, params: { id: list.title }}">{{list.title}}</router-link></p></div>',
   }
 const routes = [
     { path: '/', component: comp1 },
@@ -52,4 +50,4 @@ new Vue({
   },
   
   router
-}).$mount('#maincomponent')
+})
