@@ -1,39 +1,30 @@
 {
-  
-  "tasks":
-[ { "title":"work",
-  "work" :     
-  [{
-    "value":"code",
-    "checked":false
-  },
-  {
-    "value":"play",
-    "checked":true
-  },
-  {
-    "value":"study",
-    "checked":false
-  }]
-},
-
-{ "title":"shopping",
-  "work" :     
-  [{
-    "value":"milk",
-    "checked":false
-  },
-  {
-    "value":"eggs",
-    "checked":true
-  },
-  {
-    "value":"bread",
-    "checked":false
-  }]
-}
-
-] 
-
-        
+  "tasks": [
+    {
+      "id": 0,
+      "title": "work",
+      "work": [
+        {
+          "id": 0,
+          "value": "code",
+          "checked": false
+        },
+        {
+          "id": 1,
+          "value": "play",
+          "checked": true
+        },
+        {
+          "id": 2,
+          "value": "study",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "value": "none",
+      "checked": false,
+      "id": 1
+    }
+  ]
 }
