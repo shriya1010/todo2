@@ -16,14 +16,35 @@ var comp2= {
   props:['id'],
   components:{ list:comp3},
   methods:{
-     add(value,title){
-       var next = {   
-        "value":value,
-        "checked":false
-      }
-      var url= "http://localhost:3000/tasks?title="+title
-      const res =   axios.post(url, next )
-      //this.info=[this.info,res.data]   
+     add(value,title){        
+      var info1={}  
+        task=[]
+      var abc= axios.get("http://localhost:3000/tasks?title="+title).then(function (response) {
+        info1=response.data
+        task=info1[0].work 
+        return task      
+      
+      })
+      abc.then(response => {
+        
+        var next =  {  "value":value,     "checked":false  }
+        
+        task.push(next)
+ 
+        next={
+          "title":title,
+          "work" : task
+        }
+ 
+    var url= "http://localhost:3000/tasks/0"
+       const res =   axios.put(url, next )
+        
+      
+      })
+      
+
+
+       
     }  
   },
   mounted () {
@@ -41,9 +62,7 @@ var comp1= {
   },
   components:{ app:comp2},
   mounted () {
-    axios
-      .get(' http://localhost:3000/tasks')
-      .then(response => (this.info = response))
+    axios.get(' http://localhost:3000/tasks') .then(response => (this.info = response))
   },
   template: '<div><p v-for="list in info.data"><router-link :to="{ name: &quot;user&quot;, params: { id: list.title }}">{{list.title}}</router-link></p></div>',
   }

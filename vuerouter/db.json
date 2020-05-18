@@ -1,30 +1,26 @@
 {
   "tasks": [
     {
-      "id": 0,
       "title": "work",
       "work": [
         {
-          "id": 0,
           "value": "code",
           "checked": false
         },
         {
-          "id": 1,
           "value": "play",
           "checked": true
         },
         {
-          "id": 2,
           "value": "study",
           "checked": false
+        },
+        {
+          "value": "eat",
+          "checked": false
         }
-      ]
-    },
-    {
-      "value": "none",
-      "checked": false,
-      "id": 1
+      ],
+      "id": 0
     }
   ]
 }
