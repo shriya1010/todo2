@@ -9,18 +9,36 @@
         },
         {
           "value": "play",
-          "checked": true
+          "checked": false
         },
         {
           "value": "study",
           "checked": false
-        },
-        {
-          "value": "eat",
-          "checked": false
         }
       ],
       "id": 0
+    },
+    {
+      "title": "shopping",
+      "work": [
+        {
+          "value": "eggs",
+          "checked": false
+        },
+        {
+          "value": "milk",
+          "checked": true
+        },
+        {
+          "value": "bread",
+          "checked": false
+        },
+        {
+          "value": "new",
+          "checked": true
+        }
+      ],
+      "id": 1
     }
   ]
 }
