@@ -3,17 +3,17 @@ var comp3 = {
     return {
     }
   },
-  props:['name','id1'],
+  props:['name','id1','item','title'],
   methods:{
-    del(x,y)
-    { this.$emit('delete',[x,y])
+    del(a,b,c,d)
+    { this.$emit('delete',[a,b,c,d])
   },
-  check(x,y)
-  {this.$emit('checked',[x,y]) 
+  check(a,b,c,d)
+  {this.$emit('checked',[a,b,c,d]) 
   }
 
 },
-  template: '<li id="main"><input type="checkbox" v-model="name.checked" v-on:change="check(name.value,id1)">{{name.value}}<button  class="btn btn-primary btn-sm float-right" v-on:click="del(name.value,id1)" > &times;</button></li>'
+  template: '<li id="main"><input type="checkbox" v-model="name.checked" v-on:change="check(name.value,id1,item,title)">{{name.value}}<button  class="btn btn-primary btn-sm float-right" v-on:click="del(name.value,id1,item,title)" > &times;</button></li>'
   }
 var comp2= {
   data: function () {
@@ -28,13 +28,8 @@ var comp2= {
     remove(arr)
     { item=arr[0]
       id=arr[1]
-       var info1={}          
-      var abc= axios.get("http://localhost:3000/tasks?id="+id).then(function (response) {
-        info1=response.data
-        return info1  })
-      abc.then(response => { 
-        var task=info1[0].work 
-        title=info1[0].title
+      task=arr[2]
+      title=arr[3]
         var index =task.findIndex(x =>x.value == item)
          
         
@@ -48,63 +43,39 @@ var comp2= {
         
     var url= "http://localhost:3000/tasks/"+id
        const res =   axios.put(url, next )      
-      
-       this.info=info1
-      })   
 
     },
     check(arr)
     { item=arr[0]
       id=arr[1]
-      var info1={}          
-      var abc= axios.get("http://localhost:3000/tasks?id="+id).then(function (response) {
-        info1=response.data
-        return info1  })
-      abc.then(response => { 
-        var task=info1[0].work 
-        title=info1[0].title
-        var index =task.findIndex(x =>x.value == item)
-          task[index].checked=!task[index].checked
-        
-        
-        
-        next={
+      task=arr[2]
+      title=arr[3]
+      next={
           "title":title,
           "work" : task
         } 
         
     var url= "http://localhost:3000/tasks/"+id
        const res =   axios.put(url, next )      
-      
-       this.info=info1
-      })   
-    },
-     add(value,title){        
-      var info1={}   
-        task=[]
-      var abc= axios.get("http://localhost:3000/tasks?title="+title).then(function (response) {
-        info1=response.data
-        return info1  })
-      abc.then(response => { 
-        task=info1[0].work 
-        id=info1[0].id
-        var next =  {  "value":value,     "checked":false  }        
+      },
+     add(value,title,id,task){        
+       var next =  {  "value":value,     "checked":false  }   
         task.push(next) 
         next={
           "title":title,
           "work" : task
         } 
     var url= "http://localhost:3000/tasks/"+id
-       const res =   axios.put(url, next )      
-      
-       this.info=info1
+       const res =   axios.put(url, next )       
+       
        this.name=""
-      })   
+      
     }  
   },
   mounted () {
-    axios({ method: "GET", "url": "http://localhost:3000/tasks?title="+ this.$route.params.id }).then(response => (this.info = response.data))},
-  template: '<div><p><ul class="nav flex-column" v-for="tasks in info">{{id}}<list v-bind:id1="tasks.id" v-for="task in tasks.work" v-bind:name="task" @delete="remove" @checked="check"></list></ul><input type="text" v-model="name"><button class="btn btn-primary" v-on:click="add(name,id)">Add</button></p></div>'
+    axios.get("http://localhost:3000/tasks?title="+ this.$route.params.id ).then(response => (this.info = response.data)
+    )},
+  template: '<div><p  v-for="tasks in info"><ul class="nav flex-column">{{id}}<list v-bind:id1="tasks.id" v-bind:title="tasks.title" v-bind:item="tasks.work" v-for="task in tasks.work" v-bind:name="task"  @delete="remove" @checked="check"></list></ul>  <input type="text" v-model="name"><button class="btn btn-primary" v-on:click="add(name,id,tasks.id,tasks.work)">Add</button></p></div>'
    
 }//npx json-server --watch db.json
 

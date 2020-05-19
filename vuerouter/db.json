@@ -8,10 +8,6 @@
           "checked": false
         },
         {
-          "value": "play",
-          "checked": false
-        },
-        {
           "value": "study",
           "checked": false
         }
@@ -23,15 +19,11 @@
       "work": [
         {
           "value": "eggs",
-          "checked": false
+          "checked": true
         },
         {
           "value": "milk",
-          "checked": false
-        },
-        {
-          "value": "bread",
-          "checked": false
+          "checked": true
         }
       ],
       "id": 1
