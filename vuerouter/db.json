@@ -23,15 +23,15 @@
       "work": [
         {
           "value": "eggs",
-          "checked": true
+          "checked": false
         },
         {
           "value": "milk",
-          "checked": true
+          "checked": false
         },
         {
           "value": "bread",
-          "checked": true
+          "checked": false
         }
       ],
       "id": 1

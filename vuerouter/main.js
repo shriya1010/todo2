@@ -35,13 +35,8 @@ var comp2= {
       abc.then(response => { 
         var task=info1[0].work 
         title=info1[0].title
-        var index 
-        for( index in task)
-        {
-          if(task[index].value===item)
-          break;
-        
-        }
+        var index =task.findIndex(x =>x.value == item)
+         
         
         if (index > -1) {
             task.splice(index, 1);
@@ -68,13 +63,10 @@ var comp2= {
       abc.then(response => { 
         var task=info1[0].work 
         title=info1[0].title
-        var index 
-        for( index in task)
-        {
-          if(task[index].value===item)
+        var index =task.findIndex(x =>x.value == item)
           task[index].checked=!task[index].checked
         
-        }
+        
         
         next={
           "title":title,
