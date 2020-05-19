@@ -23,7 +23,7 @@
       "work": [
         {
           "value": "eggs",
-          "checked": false
+          "checked": true
         },
         {
           "value": "milk",
@@ -31,10 +31,6 @@
         },
         {
           "value": "bread",
-          "checked": false
-        },
-        {
-          "value": "new",
           "checked": true
         }
       ],

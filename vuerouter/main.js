@@ -6,10 +6,10 @@ var comp3 = {
   props:['name','id1'],
   methods:{
     del(x,y)
-    { this.$emit('click',[x,y])
+    { this.$emit('delete',[x,y])
   },
   check(x,y)
-  {this.$emit('change',[x,y]) 
+  {this.$emit('checked',[x,y]) 
   }
 
 },
@@ -28,7 +28,6 @@ var comp2= {
     remove(arr)
     { item=arr[0]
       id=arr[1]
-      //console.log(id) 
        var info1={}          
       var abc= axios.get("http://localhost:3000/tasks?id="+id).then(function (response) {
         info1=response.data
@@ -62,7 +61,6 @@ var comp2= {
     check(arr)
     { item=arr[0]
       id=arr[1]
-      //console.log(id)
       var info1={}          
       var abc= axios.get("http://localhost:3000/tasks?id="+id).then(function (response) {
         info1=response.data
@@ -114,7 +112,7 @@ var comp2= {
   },
   mounted () {
     axios({ method: "GET", "url": "http://localhost:3000/tasks?title="+ this.$route.params.id }).then(response => (this.info = response.data))},
-  template: '<div><p><ul class="nav flex-column" v-for="tasks in info">{{id}}<list v-bind:id1="tasks.id" v-for="task in tasks.work" v-bind:name="task" @click="remove" @change="check"></list></ul><input type="text" v-model="name"><button class="btn btn-primary" v-on:click="add(name,id)">Add</button></p></div>'
+  template: '<div><p><ul class="nav flex-column" v-for="tasks in info">{{id}}<list v-bind:id1="tasks.id" v-for="task in tasks.work" v-bind:name="task" @delete="remove" @checked="check"></list></ul><input type="text" v-model="name"><button class="btn btn-primary" v-on:click="add(name,id)">Add</button></p></div>'
    
 }//npx json-server --watch db.json
 
@@ -122,21 +120,34 @@ var comp1= {
   data: function () {
     return { 
        info:"",
-     
+       title:""     
     }
   },
   components:{ app:comp2},
-  mounted () {
-    axios.get(' http://localhost:3000/tasks') .then(response => (this.info = response))
+  methods:{
+    add(title,info)
+    {
+      var abc=axios.post(' http://localhost:3000/tasks',{"title":title,"work":[]}).then(function (response) {     
+        info1=response.data
+        return info1  })
+      abc.then(response => { 
+        (this.info).push(info1)  
+        this.title=""    
+    
+    })
+    }
   },
-  template: '<div><p v-for="list in info.data"><router-link :to="{ name: &quot;user&quot;, params: { id: list.title }}">{{list.title}}</router-link></p></div>',
+  mounted () {
+    axios.get(' http://localhost:3000/tasks') .then(response => (this.info = response.data))
+  },
+  template: '<div ><p v-for="list in info"><router-link :to="{ name: &quot;user&quot;, params: { id: list.title }}">{{list.title}}</router-link></p><input type="text" v-model="title"><button class="btn btn-primary" v-on:click="add(title,info)">Add</button></div>',
   }
 const routes = [
     { path: '/', component: comp1 },
   { path: '/next/:id', name: 'user', component: comp2, props:true },
 ]
 const router = new VueRouter({
-  routes // short for `routes: routes`
+  routes 
 })
 new Vue({ 
   el: '#maincomponent', 
