@@ -2,7 +2,7 @@ var comp3 = {
   data: function () {
     return {    }
   },
-  props:['name','id1','item','title','index'],
+  props:['name','index'],
   methods:{
     del()
     {  this.$emit('delete',this.index)  },
@@ -10,7 +10,7 @@ var comp3 = {
   {this.$emit('checked') 
   }
 },
-  template: '<li id="main"><input type="checkbox" v-model="name.checked" v-on:change="check()">{{name.value}}<button  class="btn btn-primary btn-sm float-right" v-on:click="del()" > &times;</button></li>'
+  template: '<li id="main"><input type="checkbox" v-model="name.checked"  v-on:change="check()">{{name.value}}<button  class="btn btn-primary btn-sm float-right" v-on:click="del()" > &times;</button></li>'
   }
 var comp2= {
   data: function () {
@@ -60,7 +60,7 @@ var comp2= {
   mounted () {
     axios.get("http://localhost:3000/tasks?title="+ this.$route.params.id ).then(response => (this.info = response.data)
     )},
-  template: '<div><p  v-for="tasks in info"><ul class="nav flex-column">{{id}}  <list v-bind:id1="tasks.id" v-bind:title="tasks.title" v-bind:item="tasks.work" v-for="(task,index) in tasks.work" v-bind:name="task" v-bind:index="index"  @delete="remove" @checked="check"></list></ul> <input type="text" v-model="name"><button class="btn btn-primary" v-on:click="add()">Add</button></p></div>'
+  template: '<div><p  v-for="tasks in info">  <ul class="nav flex-column">{{id}}  <list  v-for="(task,index) in tasks.work" v-bind:name="task" v-bind:index="index"  @delete="remove" @checked="check"></list></ul> <input type="text" v-model="name"><button class="btn btn-primary" v-on:click="add()">Add</button></p></div>'
    
 }//npx json-server --watch db.json
 
@@ -69,7 +69,7 @@ var comp1= {
     return { 
        info:"",
        title:"",
-       info1:""     
+            
     }
   },
   components:{ app:comp2},

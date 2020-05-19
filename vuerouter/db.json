@@ -22,8 +22,12 @@
           "checked": false
         },
         {
+          "value": "bread",
+          "checked": true
+        },
+        {
           "value": "milk",
-          "checked": false
+          "checked": true
         }
       ],
       "id": 1
