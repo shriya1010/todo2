@@ -10,7 +10,7 @@ var comp3 = {
   {this.$emit('checked') 
   }
 },
-  template: '<li id="main"><input type="checkbox" v-model="name.checked" v-on:change="check(name.value,id1,item,title)">{{name.value}}<button  class="btn btn-primary btn-sm float-right" v-on:click="del()" > &times;</button></li>'
+  template: '<li id="main"><input type="checkbox" v-model="name.checked" v-on:change="check()">{{name.value}}<button  class="btn btn-primary btn-sm float-right" v-on:click="del()" > &times;</button></li>'
   }
 var comp2= {
   data: function () {
@@ -77,7 +77,7 @@ var comp1= {
     add()
     {
       var abc={"title":this.title,"work":[]}
-     var a = axios.post(' http://localhost:3000/tasks',abc) //.then(response => (this.info1 = response.data))
+     var a = axios.post(' http://localhost:3000/tasks',abc) 
        .then(function (response) {     
         info1=response.data
         return info1  })
@@ -85,14 +85,20 @@ var comp1= {
        (this.info).push(info1)  
        
         this.title=""   }) 
-    
-    
+      
+    },
+    dele(index)
+    {
+      var url= "http://localhost:3000/tasks/"+this.info[index].id
+      axios.delete(url, {  }).then(function(response){})
+      //console.log(this.info[index].id)
+      //this.info =  this.info
     }
   },
   mounted () {
     axios.get(' http://localhost:3000/tasks') .then(response => (this.info = response.data))
   },
-  template: '<div ><p v-for="list in info"><router-link :to="{ name: &quot;user&quot;, params: { id: list.title }}">{{list.title}}</router-link></p><input type="text" v-model="title"><button class="btn btn-primary" v-on:click="add()">Add</button></div>',
+  template: '<div ><p v-for="(list,index) in info"><router-link :to="{ name: &quot;user&quot;, params: { id: list.title }}">{{list.title}}     </router-link><button  class="btn btn-primary btn-sm float-right" v-on:click="dele(index)" > &times;</button></p><input type="text" v-model="title"><button class="btn btn-primary" v-on:click="add()">Add</button></div>',
   }
 const routes = [
     { path: '/', component: comp1 },
