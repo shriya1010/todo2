@@ -1,19 +1,16 @@
 var comp3 = {
   data: function () {
-    return {
-    }
+    return {    }
   },
-  props:['name','id1','item','title'],
+  props:['name','id1','item','title','index'],
   methods:{
-    del(a,b,c,d)
-    { this.$emit('delete',[a,b,c,d])
-  },
-  check(a,b,c,d)
-  {this.$emit('checked',[a,b,c,d]) 
+    del()
+    {  this.$emit('delete',this.index)  },
+  check()
+  {this.$emit('checked') 
   }
-
 },
-  template: '<li id="main"><input type="checkbox" v-model="name.checked" v-on:change="check(name.value,id1,item,title)">{{name.value}}<button  class="btn btn-primary btn-sm float-right" v-on:click="del(name.value,id1,item,title)" > &times;</button></li>'
+  template: '<li id="main"><input type="checkbox" v-model="name.checked" v-on:change="check(name.value,id1,item,title)">{{name.value}}<button  class="btn btn-primary btn-sm float-right" v-on:click="del()" > &times;</button></li>'
   }
 var comp2= {
   data: function () {
@@ -25,48 +22,36 @@ var comp2= {
   props:['id'],
   components:{ list:comp3},
   methods:{
-    remove(arr)
-    { item=arr[0]
-      id=arr[1]
-      task=arr[2]
-      title=arr[3]
-        var index =task.findIndex(x =>x.value == item)
-         
-        
+    remove(index)
+    { 
+      task=this.info[0].work
         if (index > -1) {
             task.splice(index, 1);
         }
         next={
-          "title":title,
+          "title":this.info[0].title,
           "work" : task
         } 
         
-    var url= "http://localhost:3000/tasks/"+id
-       const res =   axios.put(url, next )      
+    var url= "http://localhost:3000/tasks/"+this.info[0].id
+       const res =   axios.put(url, next )    
 
     },
-    check(arr)
-    { item=arr[0]
-      id=arr[1]
-      task=arr[2]
-      title=arr[3]
-      next={
-          "title":title,
-          "work" : task
-        } 
-        
-    var url= "http://localhost:3000/tasks/"+id
-       const res =   axios.put(url, next )      
+    check()
+    { 
+    var url= "http://localhost:3000/tasks/"+this.info[0].id
+       const res =   axios.put(url, { "title":this.info[0].title,     "work" : this.info[0].work    }  )      
       },
-     add(value,title,id,task){        
-       var next =  {  "value":value,     "checked":false  }   
+     add(){  
+        task=this.info[0].work 
+        var next =  {  "value":this.name,     "checked":false  }   
         task.push(next) 
         next={
-          "title":title,
+          "title":this.info[0].title,
           "work" : task
         } 
-    var url= "http://localhost:3000/tasks/"+id
-       const res =   axios.put(url, next )       
+    var url= "http://localhost:3000/tasks/"+this.info[0].id
+       const res =   axios.put(url, next )    
        
        this.name=""
       
@@ -75,7 +60,7 @@ var comp2= {
   mounted () {
     axios.get("http://localhost:3000/tasks?title="+ this.$route.params.id ).then(response => (this.info = response.data)
     )},
-  template: '<div><p  v-for="tasks in info"><ul class="nav flex-column">{{id}}<list v-bind:id1="tasks.id" v-bind:title="tasks.title" v-bind:item="tasks.work" v-for="task in tasks.work" v-bind:name="task"  @delete="remove" @checked="check"></list></ul>  <input type="text" v-model="name"><button class="btn btn-primary" v-on:click="add(name,id,tasks.id,tasks.work)">Add</button></p></div>'
+  template: '<div><p  v-for="tasks in info"><ul class="nav flex-column">{{id}}  <list v-bind:id1="tasks.id" v-bind:title="tasks.title" v-bind:item="tasks.work" v-for="(task,index) in tasks.work" v-bind:name="task" v-bind:index="index"  @delete="remove" @checked="check"></list></ul> <input type="text" v-model="name"><button class="btn btn-primary" v-on:click="add()">Add</button></p></div>'
    
 }//npx json-server --watch db.json
 
@@ -83,27 +68,31 @@ var comp1= {
   data: function () {
     return { 
        info:"",
-       title:""     
+       title:"",
+       info1:""     
     }
   },
   components:{ app:comp2},
   methods:{
-    add(title,info)
+    add()
     {
-      var abc=axios.post(' http://localhost:3000/tasks',{"title":title,"work":[]}).then(function (response) {     
+      var abc={"title":this.title,"work":[]}
+     var a = axios.post(' http://localhost:3000/tasks',abc) //.then(response => (this.info1 = response.data))
+       .then(function (response) {     
         info1=response.data
         return info1  })
-      abc.then(response => { 
-        (this.info).push(info1)  
-        this.title=""    
+      a.then(response => { 
+       (this.info).push(info1)  
+       
+        this.title=""   }) 
     
-    })
+    
     }
   },
   mounted () {
     axios.get(' http://localhost:3000/tasks') .then(response => (this.info = response.data))
   },
-  template: '<div ><p v-for="list in info"><router-link :to="{ name: &quot;user&quot;, params: { id: list.title }}">{{list.title}}</router-link></p><input type="text" v-model="title"><button class="btn btn-primary" v-on:click="add(title,info)">Add</button></div>',
+  template: '<div ><p v-for="list in info"><router-link :to="{ name: &quot;user&quot;, params: { id: list.title }}">{{list.title}}</router-link></p><input type="text" v-model="title"><button class="btn btn-primary" v-on:click="add()">Add</button></div>',
   }
 const routes = [
     { path: '/', component: comp1 },
